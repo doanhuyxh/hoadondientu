@@ -1,0 +1,9 @@
+- web hoá đơn điện tử có giao diện đăng nhập , đăng kí vào hệ thống ( em cũng gửi kèm như hình ) , chức năng bên trong gồm có
+- Trang chủ
+- Hệ thống ( phân quyền người dùng , cấu hình hệ thống , tạo mẫu hoá đơn , tạo mẫu email)
+- Danh mục ( Khách hàng , nhà cung cấp , hàng hoá , tỷ giá )
+- Đăng kí  sử dụng ( Lập tờ khai , tra cứu tờ khai )
+- Tra cứu dữ liệu ( hoá đơn  )
+- Quản lý hoá đơn ( Lập hoá đơn , Lập hoá đơn từ excel ( cái này có hoặc không cũng được ) , Cấp số , Duyệt hoá đơn , Thông báo sai sót
+- Tra cứu bảng tổng hợp ( lập , tra cứu )
+- Báo cáo ( Hoá đơn )

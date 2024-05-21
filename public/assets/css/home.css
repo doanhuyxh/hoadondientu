@@ -1,0 +1,45 @@
+#tra_cuu{
+    margin-top: 4em;
+}
+#tra_cuu h2{
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px 30px ;
+    background-color: rgb(193, 39, 45) ;
+    border-radius: 8px;
+
+
+}
+#tra_cuu .title-main{
+
+}
+.main-tra-cuu{
+    width: 100%;
+    background-color: transparent;
+    overflow: auto;
+    background-image: url('/public/assets/img/viewinvoice-bg.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 180%;
+    padding: 20px;
+}
+.btn-search{
+    display: flex;
+    justify-content: center;
+}
+.btn-search button{
+    background: rgb(145, 87, 21);
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+    -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+    padding: 8px 12px;
+}
+.bd-right{
+    border-right: 1px solid #ccc;
+}
