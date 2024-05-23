@@ -25,6 +25,22 @@ class AdminSetting extends Controller
         echo $data;
     }
 
+    function deleteMail()
+    {
+        $check = $this->modelSettingMail->DeleteSettingMail($_GET['id']);
+        if ($check) {
+            echo json_encode([
+                'status' => 200,
+                'message' => 'Goods has been deleted'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 500,
+                'message' => ''
+            ]);
+        }
+    }
+
     function saveMail()
     {
         try {

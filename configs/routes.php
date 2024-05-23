@@ -16,6 +16,7 @@ $routes['admin-get-user'] = "AdminUser/getUser";
 $routes['admin-get-user-id'] = "AdminUser/getUserById";
 $routes['admin-save-user'] = "AdminUser/SaveUser";
 $routes['admin-delete-user'] = "AdminUser/DeleteUser";
+$routes['admin-view-user'] = "AdminUser/ViewUser";
 
 //admin khách hàng
 $routes['admin-customer'] = "AdminCustomer/index";
@@ -46,10 +47,25 @@ $routes['admin-get-exchange-rate-id'] = "AdminExchangeRate/getExchangeRateById";
 $routes['admin-save-exchange-rate'] = "AdminExchangeRate/SaveExchangeRate";
 $routes['admin-delete-exchange-rate'] = "AdminExchangeRate/DeleteExchangeRate";
 
+//admin hóa đơn
+$routes['admin-bill'] = "AdminBill/index";
+$routes['admin-create-bill'] = "AdminBill/createBill";
+$routes['admin-get-bill'] = "AdminBill/getBill";
+$routes['admin-get-bill-id'] = "AdminBill/getBillById";
+$routes['admin-save-bill'] = "AdminBill/SaveBill";
+$routes['admin-delete-bill'] = "AdminBill/DeleteBill";
+$routes['view-bill'] = "AdminBill/ViewBill";
+
+//admin cấp số
+
+$routes['admin-number'] = 'AdminNumber/index';
+
+
 //admin cấu hình
 $routes['admin-mail'] = "AdminSetting/mail";
 $routes['admin-get-mail-id'] = "AdminSetting/getMailContent";
 $routes['admin-save-mail'] = "AdminSetting/saveMail";
+$routes['admin-delete-mail'] = "AdminSetting/deleteMail";
 $routes['admin-setting'] = "AdminSetting/setting";
 $routes['admin-save-key'] = "AdminSetting/SaveKey";
 

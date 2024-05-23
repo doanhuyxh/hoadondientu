@@ -5,7 +5,6 @@
         <button type="button" class="btn btn-success" onclick="AddEdit(0)">
             <i class="fa-solid fa-user-plus"></i>
         </button>
-        <button type="button" class="btn btn-primary">Role</button>
     </div>
     <div class="container">
         <table class="table" id="table_user">
@@ -167,6 +166,9 @@
             })
     }
 
+    function View(id){
+        window.location.href="/admin-view-user?id="+id
+    }
 
     $(document).ready(() => {
 
@@ -207,11 +209,16 @@
                 {
                     data: null, render: function (data, type, row) {
 
-                        return "<a href='javascript:void(0)' class='btn btn-primary mx-1' onclick=AddEdit('" + row.id + "');>" +
-                            '<i class="fa-solid fa-pen-to-square"></i>' +
-                            "</a>" + "<a href='javascript:void(0)' class='btn btn-danger mx-1' onclick=Delete('" + row.id + "');>" +
-                            '<i class="fa-solid fa-trash"></i>' +
+                        return "<a href='javascript:void(0)' class='btn btn-primary mx-1' onclick=\"AddEdit('" + row.id + "')\">" +
+                            "<i class='fa-solid fa-pen-to-square'></i>" +
+                            "</a>" +
+                            "<a href='javascript:void(0)' class='btn btn-success mx-1' onclick=\"View('" + row.id + "')\">" +
+                            "<i class='fa-solid fa-eye'></i>" +
+                            "</a>" +
+                            "<a href='javascript:void(0)' class='btn btn-danger mx-1' onclick=\"Delete('" + row.id + "')\">" +
+                            "<i class='fa-solid fa-trash'></i>" +
                             "</a>";
+
                     }
 
                 },

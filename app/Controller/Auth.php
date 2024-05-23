@@ -18,11 +18,15 @@ class Auth extends Controller
 
 
             try {
+
                 $data = $this->modelUser->GetUser(trim($username), trim(md5($password)));
-                if (isset($data[0])) {
+                var_dump($data);
+
+
+                if (isset($data)) {
                     $_SESSION["username"] = $username;
-                    $_SESSION["fullname"] = $data[1];
-                    $role_name = $this->modelRole->GetRoleId($data[2]);
+                    $_SESSION["tax_code"] = $data->tax_code;
+                    $role_name = $this->modelRole->GetRoleId($data->roleId);
                     $_SESSION["role_name"] = $role_name->name;
 
                     if($role_name->name === "admin"){
@@ -37,7 +41,7 @@ class Auth extends Controller
                     return $this->Views("Share/Layout", ['subview' => 'Home/index', 'error'=> true, 'user'=> $username, 'pass'=> $password]);
                 }
             } catch (Exception $ex) {
-                echo $ex->getMessage();
+                echo 123123;
                 die();
                 session_destroy();
                 return $this->Views("Share/Layout", ['subview' => 'Home/index', 'error'=> true, 'user'=> $username, 'pass'=> $password]);
@@ -61,7 +65,7 @@ class Auth extends Controller
             $password = $_POST["password"];
             $roleId = $_POST["role"];
 
-           $this->modelUser->createUser($name, $userName, trim(md5($password)), $roleId);
+           $this->modelUser->createUser($name, $userName, trim(md5($password)), $roleId, "");
             header('Location: ' . _WEB_ROOT . '/trang-chu');
         } else {
             header('Location: ' . _WEB_ROOT . '/trang-chu');

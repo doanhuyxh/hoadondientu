@@ -130,4 +130,11 @@ class AdminUser extends Controller
         }
     }
 
+    function ViewUser()
+    {
+        $id = $_GET['id'];
+        $data = $this->modelUser->GetUserById($id);
+        return $this->Views("Share/AdminLayout", ['subview' => 'AdminUser/detail', 'user'=>$data]);
+    }
+
 }

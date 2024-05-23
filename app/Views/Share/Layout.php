@@ -26,6 +26,8 @@
 
     <link rel="stylesheet" href="<?php echo _WEB_ROOT . "/public/assets/css/styles.css" ?>">
 
+
+
 </head>
 
 <body class="overflow-hidden">

@@ -23,11 +23,55 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
 
+    <style>
+        #overlay {
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .cv-spinner {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px #ddd solid;
+            border-top: 4px #2e93e6 solid;
+            border-radius: 50%;
+            animation: sp-anime 0.8s infinite linear;
+        }
+
+        @keyframes sp-anime {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .is-hide {
+            display: none;
+        }
+    </style>
+
 </head>
 <body>
 
 <div id="wrapper">
 
+
+    <div id="overlay">
+        <div class="cv-spinner">
+            <span class="spinner"></span>
+        </div>
+    </div>
 
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -52,10 +96,11 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUtilities"
                aria-expanded="false" aria-controls="collapseUtilities">
-                <i class="fa-solid fa-list"></i>
+                <i class="fa-solid fa-gear"></i>
                 <span>Hệ thống</span>
             </a>
-            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-bs-parent="#accordionSidebar">
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                 data-bs-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="/admin-user">Quản lý user</a>
                     <a class="collapse-item" href="">Mẫu hoá đơn</a>
@@ -71,7 +116,8 @@
                 <i class="fa-solid fa-list"></i>
                 <span>Danh mục</span>
             </a>
-            <div id="collapseUtilities1" class="collapse" aria-labelledby="headingUtilities" data-bs-parent="#accordionSidebar">
+            <div id="collapseUtilities1" class="collapse" aria-labelledby="headingUtilities"
+                 data-bs-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="/admin-customer">Khách hàng</a>
                     <a class="collapse-item" href="utilities-border.html">Nhà cung cấp</a>
@@ -84,19 +130,42 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUtilities2"
                aria-expanded="false" aria-controls="collapseUtilities2">
-                <i class="fa-solid fa-list"></i>
+                <i class="fa-solid fa-receipt"></i>
                 <span>Hóa đơn</span>
             </a>
-            <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-bs-parent="#accordionSidebar">
+            <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities"
+                 data-bs-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="/admin-customer">Lập hóa đơn</a>
-                    <a class="collapse-item" href="utilities-border.html">Cấp số</a>
-                    <a class="collapse-item" href="/admin-goods">Duyệt hoá đơn</a>
-                    <a class="collapse-item" href="/admin-exchange-rate">Thông báo sai sót</a>
+                    <a class="collapse-item" href="/admin-bill">Hóa đơn</a>
+                    <a class="collapse-item" href="/admin-create-bill">Lập hóa đơn</a>
+                    <a class="collapse-item" href="/admin-number">Cấp số</a>
+                    <a class="collapse-item" href="">Duyệt hoá đơn</a>
+                    <a class="collapse-item" href="">Thông báo sai sót</a>
                 </div>
             </div>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUtilities3"
+               aria-expanded="false" aria-controls="collapseUtilities3">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Đăng kí  sử dụng</span>
+            </a>
+            <div id="collapseUtilities3" class="collapse" aria-labelledby="headingUtilities"
+                 data-bs-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="/admin-bill">Lập tờ khai</a>
+                    <a class="collapse-item" href="/admin-create-bill">Tra cứu tờ khai</a>
+                </div>
+            </div>
+        </li>
+
+        <li class="nav-item active">
+            <a class="nav-link" href="/admin-report">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Báo cáo</span>
+            </a>
+        </li>
 
     </ul>
     <!-- End of Sidebar -->

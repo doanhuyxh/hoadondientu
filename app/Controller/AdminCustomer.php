@@ -73,9 +73,9 @@ class AdminCustomer extends Controller
 
             try {
                 if ($id == 0) {
-                    $this->CustomerModel->CreateCustomer($name, $phone, $email, $address);
+                    $this->CustomerModel->CreateCustomer($name, $phone, $email, $address, "");
                 } else {
-                    $this->CustomerModel->UpdateCustomer($id, $name, $phone, $email, $address);
+                    $this->CustomerModel->UpdateCustomer($id, $name, $phone, $email, $address, "");
                 }
                 echo json_encode([
                     'status' => 200,

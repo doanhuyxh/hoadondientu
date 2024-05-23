@@ -30,7 +30,7 @@ class UserModel extends Model{
     }
 
     function GetUserById($id){
-        $stmt = $this->connection->prepare("SELECT id, user_name, tax_code, roleId FROM web_user WHERE id= :id");
+        $stmt = $this->connection->prepare("SELECT id, user_name, tax_code, roleId, permission FROM web_user WHERE id= :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_OBJ);

@@ -8,9 +8,7 @@ class AuthModel extends Model
 
         $stmt->execute(['user_name' => $data]);
 
-        $result = $stmt->fetch();
-
-        return ($result['user_name']);
+        return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
     public function createUser($tax_code, $user, $pass, $roleId): void
@@ -23,11 +21,10 @@ class AuthModel extends Model
         $stmt->execute();
     }
 
-    public function GetUser($username, $password): array
+    public function GetUser($username, $password)
     {
-        $stmt = $this->connection->prepare('SELECT id, user_name, tax_code, roleId from web_user WHERE user_name = :username AND password = :password');
+        $stmt = $this->connection->prepare('SELECT id, user_name, tax_code, roleId, permission from web_user WHERE user_name = :username AND password = :password');
         $stmt->execute(array('username' => $username, 'password'=> $password));
-        $result = $stmt->fetch();
-        return [$result['user_name'], $result['tax_code'], $result['roleId']];
+        return  $stmt->fetch(PDO::FETCH_OBJ);
     }
 }
