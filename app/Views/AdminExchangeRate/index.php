@@ -1,4 +1,4 @@
-<h3 class="m-auto"> Quản lý nhà cung cấp</h3>
+<h3 class="m-auto"> Quản lý Tỷ giá</h3>
 
 <div class="mt-4">
     <div class="btn-group gap-2">
@@ -11,11 +11,8 @@
             <thead>
             <tr>
                 <td>STT</td>
-                <td>Tên nhà cung cấp</td>
-                <td>Số điện thoại</td>
-                <td>Email</td>
-                <td>Địa chỉ</td>
-                <td>Loại</td>
+                <td>Tên tỷ giá</td>
+                <td>Tỷ giá</td>
                 <td></td>
             </tr>
             </thead>
@@ -33,29 +30,12 @@
             <div class="modal-body">
                 <input class="form-control" name="id" type="number" id="id" hidden/>
                 <div class="form-group">
-                    <label for="name" class="form-label">Tên nhà cung cấp </label>
+                    <label for="name" class="form-label">Tên tỷ giá </label>
                     <input class="form-control" name="name" id="name"/>
                 </div>
                 <div class="form-group">
-                    <label for="email" class="form-label">Email </label>
-                    <input class="form-control" name="email" id="email"/>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone" class="form-label">Số điện thoại </label>
-                    <input class="form-control" name="phone" id="phone"/>
-                </div>
-
-                <div class="form-group">
-                    <label for="address" class="form-label">Địa chỉ </label>
-                    <input class="form-control" name="address" id="address"/>
-                </div>
-                <div class="form-group">
-                    <label for="type" class="form-label">Loại nhà cung cấp </label>
-                    <select class="form-control" name="type" id="type">
-                        <option value="cá nhân">Cá nhân</option>
-                        <option value="doanh nghiệp">Doanh nghiệp</option>
-                    </select>
+                    <label for="rate" class="form-label">Tỷ giá </label>
+                    <input class="form-control" name="rate" type="number" id="rate"/>
                 </div>
 
             </div>
@@ -73,12 +53,9 @@
     function Save() {
         let Id = $("#id").val()
         let name = $("#name").val()
-        let phone = $("#phone").val()
-        let email = $("#email").val()
-        let address = $("#address").val()
-        let type = $("#type").val()
+        let rate = $("#rate").val()
 
-        fetch("/admin-save-supplier", {
+        fetch("/admin-save-exchange-rate", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -86,10 +63,7 @@
             body: JSON.stringify({
                 "id": Id,
                 "name": name,
-                "email": email,
-                "phone": phone,
-                "address": address,
-                "type":type
+                "rate": rate,
             })
         })
             .then(res => res.json())
@@ -118,36 +92,30 @@
 
     async function AddEdit(id) {
         if (id == 0) {
-            $("#exampleModalLabel").text("Thêm nhà cung cấp")
+            $("#exampleModalLabel").text("Thêm tỷ giá")
             $("#id").val(0)
             $("#name").val("")
-            $("#phone").val('')
-            $("#email").val('')
-            $("#address").val('')
+            $("#rate").val('')
         } else {
-            $("#exampleModalLabel").text("Cập nhật nhà cung cấp");
+            $("#exampleModalLabel").text("Cập nhật tỷ giá");
 
             let formData = new FormData();
             formData.append('id', id);
-            const res = await fetch("/admin-get-supplier-id", {
+            const res = await fetch("/admin-get-exchange-rate-id", {
                 method: "POST",
                 body: formData
             })
             const resJson = await res.json()
             $("#id").val(resJson.id)
             $("#name").val(resJson.name)
-            $("#phone").val(resJson.phone)
-            $("#email").val(resJson.email)
-            $("#address").val(resJson.address)
-            $("#type").val(resJson.type)
-
+            $("#rate").val(resJson.rate)
         }
 
         $("#exampleModal").modal("show");
     }
 
     function Delete(id) {
-        fetch("/admin-delete-supplier?id=" + id)
+        fetch("/admin-delete-exchange-rate?id=" + id)
             .then(es => es.json())
             .then(res => {
                 console.log(res)
@@ -192,16 +160,13 @@
             "stateSave": true,
 
             ajax: {
-                url: '/admin-get-supplier',
+                url: '/admin-get-exchange-rate',
                 "datatype": "json"
             },
             columns: [
                 {"data": "id", "name": "id"},
                 {"data": "name", "name": "name"},
-                {"data": "phone", "name": "phone"},
-                {"data": "email", "name": "email"},
-                {"data": "address", "name": "address"},
-                {"data": "type", "name": "type"},
+                {"data": "rate", "name": "rate"},
                 {
                     data: null, render: function (data, type, row) {
 

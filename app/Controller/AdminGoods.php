@@ -1,21 +1,20 @@
 <?php
 
-class AdminSupplier extends Controller
+class AdminGoods extends Controller
 {
 
-    protected $SupplierModel;
-
+    protected $modelGoods;
     public function __construct()
     {
-        $this->SupplierModel = $this->model("SupplierModel");
+        $this->modelGoods=$this->model("GoodsModel");
     }
 
     function index()
     {
-        return $this->Views("Share/AdminLayout", ['subview' => 'AdminSupplier/index']);
+        return $this->Views("Share/AdminLayout", ['subview' => 'AdminGoods/index']);
     }
 
-    function getSupplier()
+    function getGoods()
     {
         try {
             $draw = isset($_REQUEST['draw']) ? $_REQUEST['draw'] : null;
@@ -32,7 +31,7 @@ class AdminSupplier extends Controller
             $pageSize = $length !== null ? (int)$length : 0;
             $skip = $start !== null ? (int)$start : 0;
             // lấy dữ liệu từ db
-            $gridItems = $this->SupplierModel->GetAllSupplier($pageSize, $skip, $searchValue, $sortColumn, $sortColumnAscDesc);
+            $gridItems = $this->modelGoods->GetAllGoods($pageSize, $skip, $searchValue, $sortColumn, $sortColumnAscDesc);
 
             echo json_encode([
                 'draw' => $draw,
@@ -50,21 +49,14 @@ class AdminSupplier extends Controller
         }
     }
 
-    function getSupplierById()
+    function getGoodsById()
     {
         $id = intval($_POST["id"]);
-        $Supplier = $this->SupplierModel->GetSupplierById($id);
-        echo json_encode($Supplier);
-
-    }
-
-    function getSupplierItem()
-    {
-        $Supplier = $this->SupplierModel->GetSupplierItem();
+        $Supplier = $this->modelGoods->GetGoodsById($id);
         echo json_encode($Supplier);
     }
 
-    function SaveSupplier()
+    function SaveGoods()
     {
         $json_data = file_get_contents('php://input');
         $data = json_decode($json_data, true);
@@ -72,21 +64,20 @@ class AdminSupplier extends Controller
         if ($data !== null) {
             $id = intval($data['id']);
             $name = $data['name'];
-            $phone = $data['phone'];
-            $email = $data['email'];
-            $address = $data['address'];
-            $type = $data['type'];
+            $quantity = $data['quantity'];
+            $unit = $data['unit'];
+            $supplier = $data['supplier'];
 
 
             try {
                 if ($id == 0) {
-                    $this->SupplierModel->CreateSupplier($name, $phone, $email, $address, $type);
+                    $this->modelGoods->CreateGoods($name, $unit, $quantity, $supplier);
                 } else {
-                    $this->SupplierModel->UpdateSupplier($id, $name, $phone, $email, $address, $type);
+                    $this->modelGoods->UpdateGoods($id, $name, $unit, $quantity, $supplier);
                 }
                 echo json_encode([
                     'status' => 200,
-                    'message' => 'Supplier has been created'
+                    'message' => 'Goods has been created'
                 ]);
             } catch (Exception $e) {
                 echo json_encode([
@@ -99,18 +90,18 @@ class AdminSupplier extends Controller
         } else {
             echo json_encode([
                 'status' => 500,
-                'message' => 'Supplier has been not create'
+                'message' => 'Goods has been not create'
             ]);
         }
     }
 
-    function DeleteSupplier()
+    function DeleteGoods()
     {
-        $check = $this->SupplierModel->DeleteSupplier($_GET['id']);
+        $check = $this->modelGoods->DeleteGoods($_GET['id']);
         if ($check) {
             echo json_encode([
                 'status' => 200,
-                'message' => 'Supplier has been deleted'
+                'message' => 'Goods has been deleted'
             ]);
         } else {
             echo json_encode([
@@ -119,4 +110,5 @@ class AdminSupplier extends Controller
             ]);
         }
     }
+
 }

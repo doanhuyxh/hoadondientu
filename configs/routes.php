@@ -27,9 +27,24 @@ $routes['admin-delete-customer'] = "AdminCustomer/DeleteCustomer";
 //admin nhà cung cấp
 $routes['admin-supplier'] = "AdminSupplier/index";
 $routes['admin-get-supplier'] = "AdminSupplier/getSupplier";
+$routes['admin-get-supplier-item'] = "AdminSupplier/getSupplierItem";
 $routes['admin-get-supplier-id'] = "AdminSupplier/getSupplierById";
 $routes['admin-save-supplier'] = "AdminSupplier/SaveSupplier";
 $routes['admin-delete-supplier'] = "AdminSupplier/DeleteSupplier";
+
+//admin hàng hóa
+$routes['admin-goods'] = "AdminGoods/index";
+$routes['admin-get-goods'] = "AdminGoods/getGoods";
+$routes['admin-get-goods-id'] = "AdminGoods/getGoodsById";
+$routes['admin-save-goods'] = "AdminGoods/SaveGoods";
+$routes['admin-delete-goods'] = "AdminGoods/DeleteGoods";
+
+//admin tỷ giá
+$routes['admin-exchange-rate'] = "AdminExchangeRate/index";
+$routes['admin-get-exchange-rate'] = "AdminExchangeRate/getExchangeRate";
+$routes['admin-get-exchange-rate-id'] = "AdminExchangeRate/getExchangeRateById";
+$routes['admin-save-exchange-rate'] = "AdminExchangeRate/SaveExchangeRate";
+$routes['admin-delete-exchange-rate'] = "AdminExchangeRate/DeleteExchangeRate";
 
 
 

@@ -1,21 +1,20 @@
 <?php
 
-class AdminSupplier extends Controller
+class AdminExchangeRate extends Controller
 {
 
-    protected $SupplierModel;
-
+    protected $modelExchangeRate;
     public function __construct()
     {
-        $this->SupplierModel = $this->model("SupplierModel");
+        $this->modelExchangeRate=$this->model("ExchangeRateModel");
     }
 
     function index()
     {
-        return $this->Views("Share/AdminLayout", ['subview' => 'AdminSupplier/index']);
+        return $this->Views("Share/AdminLayout", ['subview' => 'AdminExchangeRate/index']);
     }
 
-    function getSupplier()
+    function getExchangeRate()
     {
         try {
             $draw = isset($_REQUEST['draw']) ? $_REQUEST['draw'] : null;
@@ -32,7 +31,7 @@ class AdminSupplier extends Controller
             $pageSize = $length !== null ? (int)$length : 0;
             $skip = $start !== null ? (int)$start : 0;
             // lấy dữ liệu từ db
-            $gridItems = $this->SupplierModel->GetAllSupplier($pageSize, $skip, $searchValue, $sortColumn, $sortColumnAscDesc);
+            $gridItems = $this->modelExchangeRate->GetAllExchangeRate($pageSize, $skip, $searchValue, $sortColumn, $sortColumnAscDesc);
 
             echo json_encode([
                 'draw' => $draw,
@@ -50,21 +49,14 @@ class AdminSupplier extends Controller
         }
     }
 
-    function getSupplierById()
+    function getExchangeRateById()
     {
         $id = intval($_POST["id"]);
-        $Supplier = $this->SupplierModel->GetSupplierById($id);
-        echo json_encode($Supplier);
-
-    }
-
-    function getSupplierItem()
-    {
-        $Supplier = $this->SupplierModel->GetSupplierItem();
+        $Supplier = $this->modelExchangeRate->GetExchangeRateById($id);
         echo json_encode($Supplier);
     }
 
-    function SaveSupplier()
+    function SaveExchangeRate()
     {
         $json_data = file_get_contents('php://input');
         $data = json_decode($json_data, true);
@@ -72,21 +64,18 @@ class AdminSupplier extends Controller
         if ($data !== null) {
             $id = intval($data['id']);
             $name = $data['name'];
-            $phone = $data['phone'];
-            $email = $data['email'];
-            $address = $data['address'];
-            $type = $data['type'];
+            $rate = $data['rate'];
 
 
             try {
                 if ($id == 0) {
-                    $this->SupplierModel->CreateSupplier($name, $phone, $email, $address, $type);
+                    $this->modelExchangeRate->CreateExchangeRate($name, $rate);
                 } else {
-                    $this->SupplierModel->UpdateSupplier($id, $name, $phone, $email, $address, $type);
+                    $this->modelExchangeRate->UpdateExchangeRate($id, $name, $rate);
                 }
                 echo json_encode([
                     'status' => 200,
-                    'message' => 'Supplier has been created'
+                    'message' => 'ExchangeRate has been created'
                 ]);
             } catch (Exception $e) {
                 echo json_encode([
@@ -99,18 +88,18 @@ class AdminSupplier extends Controller
         } else {
             echo json_encode([
                 'status' => 500,
-                'message' => 'Supplier has been not create'
+                'message' => 'ExchangeRate has been not create'
             ]);
         }
     }
 
-    function DeleteSupplier()
+    function DeleteExchangeRate()
     {
-        $check = $this->SupplierModel->DeleteSupplier($_GET['id']);
+        $check = $this->modelExchangeRate->DeleteExchangeRate($_GET['id']);
         if ($check) {
             echo json_encode([
                 'status' => 200,
-                'message' => 'Supplier has been deleted'
+                'message' => 'ExchangeRate has been deleted'
             ]);
         } else {
             echo json_encode([

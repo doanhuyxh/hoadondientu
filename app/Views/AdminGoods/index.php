@@ -11,11 +11,10 @@
             <thead>
             <tr>
                 <td>STT</td>
-                <td>Tên nhà cung cấp</td>
-                <td>Số điện thoại</td>
-                <td>Email</td>
-                <td>Địa chỉ</td>
-                <td>Loại</td>
+                <td>Tên hàng hóa</td>
+                <td>Số lượng</td>
+                <td>Đơn vị</td>
+                <td>Nhà cung cấp</td>
                 <td></td>
             </tr>
             </thead>
@@ -33,31 +32,25 @@
             <div class="modal-body">
                 <input class="form-control" name="id" type="number" id="id" hidden/>
                 <div class="form-group">
-                    <label for="name" class="form-label">Tên nhà cung cấp </label>
+                    <label for="name" class="form-label">Tên hàng hóa </label>
                     <input class="form-control" name="name" id="name"/>
                 </div>
                 <div class="form-group">
-                    <label for="email" class="form-label">Email </label>
-                    <input class="form-control" name="email" id="email"/>
+                    <label for="quantity" class="form-label">Số lượng </label>
+                    <input class="form-control" name="quantity" type="number" id="quantity"/>
                 </div>
 
                 <div class="form-group">
-                    <label for="phone" class="form-label">Số điện thoại </label>
-                    <input class="form-control" name="phone" id="phone"/>
+                    <label for="unit" class="form-label">Đơn vị </label>
+                    <input class="form-control" name="unit" id="unit"/>
                 </div>
 
                 <div class="form-group">
-                    <label for="address" class="form-label">Địa chỉ </label>
-                    <input class="form-control" name="address" id="address"/>
-                </div>
-                <div class="form-group">
-                    <label for="type" class="form-label">Loại nhà cung cấp </label>
-                    <select class="form-control" name="type" id="type">
-                        <option value="cá nhân">Cá nhân</option>
-                        <option value="doanh nghiệp">Doanh nghiệp</option>
+                    <label for="supplier" class="form-label">Nhà cung cấp </label>
+                    <select class="form-control" name="supplier" id="supplier">
+                        <option selected disabled>--vui lòng chọn</option>
                     </select>
                 </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -73,12 +66,11 @@
     function Save() {
         let Id = $("#id").val()
         let name = $("#name").val()
-        let phone = $("#phone").val()
-        let email = $("#email").val()
-        let address = $("#address").val()
-        let type = $("#type").val()
+        let quantity = $("#quantity").val()
+        let unit = $("#unit").val()
+        let supplier = $("#supplier").val()
 
-        fetch("/admin-save-supplier", {
+        fetch("/admin-save-goods", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -86,10 +78,9 @@
             body: JSON.stringify({
                 "id": Id,
                 "name": name,
-                "email": email,
-                "phone": phone,
-                "address": address,
-                "type":type
+                "quantity": quantity,
+                "unit": unit,
+                "supplier": supplier,
             })
         })
             .then(res => res.json())
@@ -118,28 +109,27 @@
 
     async function AddEdit(id) {
         if (id == 0) {
-            $("#exampleModalLabel").text("Thêm nhà cung cấp")
+            $("#exampleModalLabel").text("Thêm hàng hóa")
             $("#id").val(0)
             $("#name").val("")
-            $("#phone").val('')
-            $("#email").val('')
-            $("#address").val('')
+            $("#supplier").val('')
+            $("#unit").val('')
+            $("#quantity").val(0)
         } else {
-            $("#exampleModalLabel").text("Cập nhật nhà cung cấp");
+            $("#exampleModalLabel").text("Cập nhật hàng hóa");
 
             let formData = new FormData();
             formData.append('id', id);
-            const res = await fetch("/admin-get-supplier-id", {
+            const res = await fetch("/admin-get-goods-id", {
                 method: "POST",
                 body: formData
             })
             const resJson = await res.json()
             $("#id").val(resJson.id)
             $("#name").val(resJson.name)
-            $("#phone").val(resJson.phone)
-            $("#email").val(resJson.email)
-            $("#address").val(resJson.address)
-            $("#type").val(resJson.type)
+            $("#supplier").val(resJson.supplier)
+            $("#unit").val(resJson.unit)
+            $("#quantity").val(resJson.quantity)
 
         }
 
@@ -147,7 +137,7 @@
     }
 
     function Delete(id) {
-        fetch("/admin-delete-supplier?id=" + id)
+        fetch("/admin-delete-goods?id=" + id)
             .then(es => es.json())
             .then(res => {
                 console.log(res)
@@ -192,16 +182,15 @@
             "stateSave": true,
 
             ajax: {
-                url: '/admin-get-supplier',
+                url: '/admin-get-goods',
                 "datatype": "json"
             },
             columns: [
                 {"data": "id", "name": "id"},
                 {"data": "name", "name": "name"},
-                {"data": "phone", "name": "phone"},
-                {"data": "email", "name": "email"},
-                {"data": "address", "name": "address"},
-                {"data": "type", "name": "type"},
+                {"data": "quantity", "name": "quantity"},
+                {"data": "unit", "name": "unit"},
+                {"data": "supplier", "name": "supplier"},
                 {
                     data: null, render: function (data, type, row) {
 
@@ -221,6 +210,17 @@
             }]
 
         });
+
+        fetch("/admin-get-supplier-item")
+            .then(res=>res.json())
+            .then(supplier=>{
+                supplier.forEach(function(item) {
+                    $('#supplier').append($('<option>', {
+                        value: item.name,
+                        text: item.name
+                    }));
+                });
+            })
     })
 
 </script>

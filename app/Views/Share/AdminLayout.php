@@ -71,6 +71,13 @@
             </a>
         </li>
 
+<li class="nav-item">
+            <a class="nav-link" href="/admin-exchange-rate">
+                <i class="fa-solid fa-building-columns"></i>
+                <span>Tỉ giá</span>
+            </a>
+        </li>
+
 
     </ul>
     <!-- End of Sidebar -->
