@@ -9,6 +9,9 @@
     <script src="<?php echo _WEB_ROOT . "/public/lib/bootstrap/bootstrap.bundle.min.js" ?>"></script>
     <script src="<?php echo _WEB_ROOT . "/public/lib/jquery-3.6.3.js" ?>"></script>
 
+    <script src="<?php echo _WEB_ROOT . "/public/lib/CkEditor/ckeditor.js" ?>"></script>
+    <script src="<?php echo _WEB_ROOT . "/public/lib/CkEditor/config.js" ?>"></script>
+
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -47,35 +50,51 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/admin-user">
-                <i class="fa-solid fa-building-columns"></i>
-                <span>Quản lý user</span>
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUtilities"
+               aria-expanded="false" aria-controls="collapseUtilities">
+                <i class="fa-solid fa-list"></i>
+                <span>Hệ thống</span>
             </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/admin-customer">
-                <i class="fa-solid fa-building-columns"></i>
-                <span>Khách hàng</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/admin-supplier">
-                <i class="fa-solid fa-building-columns"></i>
-                <span>Nhà cung cấp</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/admin-goods">
-                <i class="fa-solid fa-building-columns"></i>
-                <span>Hàng hóa</span>
-            </a>
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-bs-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="/admin-user">Quản lý user</a>
+                    <a class="collapse-item" href="">Mẫu hoá đơn</a>
+                    <a class="collapse-item" href="/admin-mail">Mẫu email</a>
+                    <a class="collapse-item" href="/admin-setting">Cấu hình hệ thống</a>
+                </div>
+            </div>
         </li>
 
-<li class="nav-item">
-            <a class="nav-link" href="/admin-exchange-rate">
-                <i class="fa-solid fa-building-columns"></i>
-                <span>Tỉ giá</span>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUtilities1"
+               aria-expanded="false" aria-controls="collapseUtilities">
+                <i class="fa-solid fa-list"></i>
+                <span>Danh mục</span>
             </a>
+            <div id="collapseUtilities1" class="collapse" aria-labelledby="headingUtilities" data-bs-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="/admin-customer">Khách hàng</a>
+                    <a class="collapse-item" href="utilities-border.html">Nhà cung cấp</a>
+                    <a class="collapse-item" href="/admin-goods">Hàng hóa</a>
+                    <a class="collapse-item" href="/admin-exchange-rate">Tỷ giá</a>
+                </div>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUtilities2"
+               aria-expanded="false" aria-controls="collapseUtilities2">
+                <i class="fa-solid fa-list"></i>
+                <span>Hóa đơn</span>
+            </a>
+            <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-bs-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="/admin-customer">Lập hóa đơn</a>
+                    <a class="collapse-item" href="utilities-border.html">Cấp số</a>
+                    <a class="collapse-item" href="/admin-goods">Duyệt hoá đơn</a>
+                    <a class="collapse-item" href="/admin-exchange-rate">Thông báo sai sót</a>
+                </div>
+            </div>
         </li>
 
 

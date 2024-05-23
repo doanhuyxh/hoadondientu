@@ -46,6 +46,14 @@ $routes['admin-get-exchange-rate-id'] = "AdminExchangeRate/getExchangeRateById";
 $routes['admin-save-exchange-rate'] = "AdminExchangeRate/SaveExchangeRate";
 $routes['admin-delete-exchange-rate'] = "AdminExchangeRate/DeleteExchangeRate";
 
+//admin cấu hình
+$routes['admin-mail'] = "AdminSetting/mail";
+$routes['admin-get-mail-id'] = "AdminSetting/getMailContent";
+$routes['admin-save-mail'] = "AdminSetting/saveMail";
+$routes['admin-setting'] = "AdminSetting/setting";
+$routes['admin-save-key'] = "AdminSetting/SaveKey";
 
 
+// router khác
+$routes['upload-images'] = "UploadMedia/Images";
 ?>
