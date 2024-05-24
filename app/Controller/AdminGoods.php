@@ -11,6 +11,13 @@ class AdminGoods extends Controller
 
     function index()
     {
+
+        if(!$this->CheckPermission("listGoods")){
+            header('Location: ' . _WEB_ROOT . '/admin');
+            die();
+        }
+
+
         return $this->Views("Share/AdminLayout", ['subview' => 'AdminGoods/index']);
     }
 
@@ -58,6 +65,16 @@ class AdminGoods extends Controller
 
     function SaveGoods()
     {
+        if(!$this->CheckPermission("addEditGoods")){
+            echo json_encode([
+                'status' => 500,
+                'message' => 'Bạn không có quyền'
+            ]);
+            die();
+        }
+
+
+
         $json_data = file_get_contents('php://input');
         $data = json_decode($json_data, true);
 
@@ -77,12 +94,12 @@ class AdminGoods extends Controller
                 }
                 echo json_encode([
                     'status' => 200,
-                    'message' => 'Goods has been created'
+                    'message' => 'Tạo thành công'
                 ]);
             } catch (Exception $e) {
                 echo json_encode([
                     'status' => 500,
-                    'message' => $e
+                    'message' => "Tạo thất bại"
                 ]);
             }
 
@@ -90,23 +107,33 @@ class AdminGoods extends Controller
         } else {
             echo json_encode([
                 'status' => 500,
-                'message' => 'Goods has been not create'
+                'message' => 'Tạo thất bại'
             ]);
         }
     }
 
     function DeleteGoods()
     {
+        if(!$this->CheckPermission("deleteGoods")){
+            echo json_encode([
+                'status' => 500,
+                'message' => 'Bạn không có quyền'
+            ]);
+            die();
+        }
+
+
+
         $check = $this->modelGoods->DeleteGoods($_GET['id']);
         if ($check) {
             echo json_encode([
                 'status' => 200,
-                'message' => 'Goods has been deleted'
+                'message' => 'Xóa thành công'
             ]);
         } else {
             echo json_encode([
                 'status' => 500,
-                'message' => ''
+                'message' => 'Xóa thất bại'
             ]);
         }
     }

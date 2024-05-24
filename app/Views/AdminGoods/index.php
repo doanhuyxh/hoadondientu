@@ -100,8 +100,9 @@
                     Swal.fire({
                         position: "top-end",
                         icon: "error",
+                        title:res.message,
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 3000
                     });
                 }
             })
@@ -155,8 +156,9 @@
                     Swal.fire({
                         position: "top-end",
                         icon: "error",
+                        title:res.message,
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 3000
                     });
                 }
             })

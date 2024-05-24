@@ -15,6 +15,7 @@ $routes['admin-user'] = "AdminUser/index";
 $routes['admin-get-user'] = "AdminUser/getUser";
 $routes['admin-get-user-id'] = "AdminUser/getUserById";
 $routes['admin-save-user'] = "AdminUser/SaveUser";
+$routes['admin-save-permission'] = "AdminUser/SavePermission";
 $routes['admin-delete-user'] = "AdminUser/DeleteUser";
 $routes['admin-view-user'] = "AdminUser/ViewUser";
 
@@ -57,8 +58,12 @@ $routes['admin-delete-bill'] = "AdminBill/DeleteBill";
 $routes['view-bill'] = "AdminBill/ViewBill";
 
 //admin cấp số
-
 $routes['admin-number'] = 'AdminNumber/index';
+$routes['admin-get-number'] = "AdminNumber/getNumber";
+$routes['admin-get-number-id'] = "AdminNumber/getNumberById";
+$routes['admin-save-number'] = "AdminNumber/SaveNumber";
+$routes['admin-delete-number'] = "AdminNumber/DeleteNumber";
+
 
 
 //admin cấu hình

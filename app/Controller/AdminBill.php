@@ -13,6 +13,12 @@ class AdminBill extends Controller
 
     function index()
     {
+        if(!$this->CheckPermission("listBill")){
+            header('Location: ' . _WEB_ROOT . '/admin');
+            die();
+        }
+
+
         return $this->Views("Share/AdminLayout", ['subview' => 'AdminBill/index']);
     }
 
@@ -53,6 +59,10 @@ class AdminBill extends Controller
 
     function createBill()
     {
+        if(!$this->CheckPermission("addEditBill")){
+            header('Location: ' . _WEB_ROOT . '/admin');
+            die();
+        }
         return $this->Views("Share/AdminLayout", ['subview' => 'AdminBill/addEdit']);
     }
 
@@ -67,6 +77,15 @@ class AdminBill extends Controller
             header("Location: /404");
             die();
         }
+
+        if(!$this->CheckPermission("addEditBill")){
+            echo json_encode([
+                'status' => 500,
+                'message' => 'Bạn không có quyền'
+            ]);
+            die();
+        }
+
 
         try {
 
@@ -101,13 +120,13 @@ class AdminBill extends Controller
 
             echo json_encode([
                 'status' => 200,
-                'message' => 'Bill has been created'
+                'message' => 'Tạo thành công'
             ]);
         } catch (Exception $ex) {
 
             echo json_encode([
                 'status' => 500,
-                'message' => $ex
+                'message' => "Tạo thất bại"
             ]);
 
         }
@@ -118,12 +137,21 @@ class AdminBill extends Controller
     function DeleteBill()
     {
 
+        if(!$this->CheckPermission("deleteBill")){
+            echo json_encode([
+                'status' => 500,
+                'message' => 'Bạn không có quyền'
+            ]);
+            die();
+        }
+
+
         $check = $this->billModel->deleteBill($_GET['id']);
         if ($check) {
             $this->bilItemModel->deleteItemInBillId($_GET['id']);
             echo json_encode([
                 'status' => 200,
-                'message' => 'Bill has been deleted'
+                'message' => 'Xóa thành công'
             ]);
         } else {
             echo json_encode([

@@ -12,6 +12,11 @@ class AdminCustomer extends Controller
 
     function index()
     {
+        if(!$this->CheckPermission("listCustomer")){
+            header('Location: ' . _WEB_ROOT . '/admin');
+            die();
+        }
+
         return $this->Views("Share/AdminLayout", ['subview' => 'AdminCustomer/index']);
     }
 
@@ -60,6 +65,15 @@ class AdminCustomer extends Controller
 
     function SaveCustomer()
     {
+
+        if(!$this->CheckPermission("addEditCustomer")){
+            echo json_encode([
+                'status' => 500,
+                'message' => 'Bạn không có quyền'
+            ]);
+            die();
+        }
+
         $json_data = file_get_contents('php://input');
         $data = json_decode($json_data, true);
 
@@ -79,12 +93,12 @@ class AdminCustomer extends Controller
                 }
                 echo json_encode([
                     'status' => 200,
-                    'message' => 'Customer has been created'
+                    'message' => 'Tạo thành công'
                 ]);
             } catch (Exception $e) {
                 echo json_encode([
                     'status' => 500,
-                    'message' => $e
+                    'message' => "Tạo thất bại"
                 ]);
             }
 
@@ -99,16 +113,25 @@ class AdminCustomer extends Controller
 
     function DeleteCustomer()
     {
+        if(!$this->CheckPermission("deleteCustomer")){
+            echo json_encode([
+                'status' => 500,
+                'message' => 'Bạn không có quyền'
+            ]);
+            die();
+        }
+
+
         $check = $this->CustomerModel->DeleteCustomer($_GET['id']);
         if ($check) {
             echo json_encode([
                 'status' => 200,
-                'message' => 'User has been deleted'
+                'message' => 'Xóa thành công'
             ]);
         } else {
             echo json_encode([
                 'status' => 500,
-                'message' => ''
+                'message' => 'Xóa thất bại'
             ]);
         }
     }

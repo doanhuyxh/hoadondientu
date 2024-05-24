@@ -12,6 +12,10 @@ class AdminSupplier extends Controller
 
     function index()
     {
+        if(!$this->CheckPermission("listSupplier")){
+            header('Location: ' . _WEB_ROOT . '/admin');
+            die();
+        }
         return $this->Views("Share/AdminLayout", ['subview' => 'AdminSupplier/index']);
     }
 
@@ -66,6 +70,15 @@ class AdminSupplier extends Controller
 
     function SaveSupplier()
     {
+        if(!$this->CheckPermission("addEditSupplier")){
+            echo json_encode([
+                'status' => 500,
+                'message' => 'Bạn không có quyền'
+            ]);
+            die();
+        }
+
+
         $json_data = file_get_contents('php://input');
         $data = json_decode($json_data, true);
 
@@ -86,7 +99,7 @@ class AdminSupplier extends Controller
                 }
                 echo json_encode([
                     'status' => 200,
-                    'message' => 'Supplier has been created'
+                    'message' => 'Tạo thành công'
                 ]);
             } catch (Exception $e) {
                 echo json_encode([
@@ -99,23 +112,32 @@ class AdminSupplier extends Controller
         } else {
             echo json_encode([
                 'status' => 500,
-                'message' => 'Supplier has been not create'
+                'message' => 'Tạo thất bại'
             ]);
         }
     }
 
     function DeleteSupplier()
     {
+        if(!$this->CheckPermission("deleteSupplier")){
+            echo json_encode([
+                'status' => 500,
+                'message' => 'Bạn không có quyền'
+            ]);
+            die();
+        }
+
+
         $check = $this->SupplierModel->DeleteSupplier($_GET['id']);
         if ($check) {
             echo json_encode([
                 'status' => 200,
-                'message' => 'Supplier has been deleted'
+                'message' => 'Xóa thành công'
             ]);
         } else {
             echo json_encode([
                 'status' => 500,
-                'message' => ''
+                'message' => 'Xóa thất bại'
             ]);
         }
     }

@@ -11,6 +11,11 @@ class AdminExchangeRate extends Controller
 
     function index()
     {
+        if(!$this->CheckPermission("listExchangeRate")){
+            header('Location: ' . _WEB_ROOT . '/admin');
+            die();
+        }
+
         return $this->Views("Share/AdminLayout", ['subview' => 'AdminExchangeRate/index']);
     }
 
@@ -58,6 +63,15 @@ class AdminExchangeRate extends Controller
 
     function SaveExchangeRate()
     {
+        if(!$this->CheckPermission("addEditExchangeRate")){
+            echo json_encode([
+                'status' => 500,
+                'message' => 'Bạn không có quyền'
+            ]);
+            die();
+        }
+
+
         $json_data = file_get_contents('php://input');
         $data = json_decode($json_data, true);
 
@@ -95,16 +109,25 @@ class AdminExchangeRate extends Controller
 
     function DeleteExchangeRate()
     {
+        if(!$this->CheckPermission("deleteExchangeRate")){
+            echo json_encode([
+                'status' => 500,
+                'message' => 'Bạn không có quyền'
+            ]);
+            die();
+        }
+
+
         $check = $this->modelExchangeRate->DeleteExchangeRate($_GET['id']);
         if ($check) {
             echo json_encode([
                 'status' => 200,
-                'message' => 'ExchangeRate has been deleted'
+                'message' => 'Xóa thành công'
             ]);
         } else {
             echo json_encode([
                 'status' => 500,
-                'message' => ''
+                'message' => 'Xóa thất bại'
             ]);
         }
     }

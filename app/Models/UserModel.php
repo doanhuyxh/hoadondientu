@@ -64,4 +64,12 @@ class UserModel extends Model{
         $stmt->bindParam(4, $roleId);
         $stmt->execute();
     }
+
+    function updatePermission($id, $permission)
+    {
+        $stmt = $this->connection->prepare('UPDATE web_user SET permission = ? WHERE id = ?');
+        $stmt->bindParam(1, $permission);
+        $stmt->bindParam(2, $id);
+        $stmt->execute();
+    }
 }

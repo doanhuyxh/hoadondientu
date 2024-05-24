@@ -27,4 +27,12 @@ class AuthModel extends Model
         $stmt->execute(array('username' => $username, 'password'=> $password));
         return  $stmt->fetch(PDO::FETCH_OBJ);
     }
+
+    function GetPermission($id)
+    {
+        $stmt = $this->connection->prepare('SELECT permission from web_user WHERE id = :id');
+        $stmt->execute(array(':id' => $id));
+        $permission = $stmt->fetchColumn();
+        return $permission;
+    }
 }

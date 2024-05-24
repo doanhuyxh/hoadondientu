@@ -20,16 +20,14 @@ class Auth extends Controller
             try {
 
                 $data = $this->modelUser->GetUser(trim($username), trim(md5($password)));
-                var_dump($data);
-
-
                 if (isset($data)) {
                     $_SESSION["username"] = $username;
                     $_SESSION["tax_code"] = $data->tax_code;
+                    $_SESSION["userId"] = $data->id;
                     $role_name = $this->modelRole->GetRoleId($data->roleId);
                     $_SESSION["role_name"] = $role_name->name;
 
-                    if($role_name->name === "admin"){
+                    if($role_name->name === "admin" || $role_name->name == "manager"){
                         header('Location: ' . _WEB_ROOT . '/admin');
                         die();
                     }else{

@@ -13,6 +13,11 @@ class AdminUser extends Controller
 
     function index()
     {
+        if(!$this->CheckPermission("listUser")){
+            header('Location: ' . _WEB_ROOT . '/admin');
+            die();
+        }
+
         return $this->Views("Share/AdminLayout", ['subview' => 'AdminUser/index']);
     }
 
@@ -77,6 +82,15 @@ class AdminUser extends Controller
 
     function SaveUser()
     {
+        if(!$this->CheckPermission("addEditUser")){
+            echo json_encode([
+                'status' => 500,
+                'message' => 'Bạn không có quyền'
+            ]);
+            die();
+        }
+
+
         $json_data = file_get_contents('php://input');
         $data = json_decode($json_data, true);
 
@@ -96,12 +110,12 @@ class AdminUser extends Controller
                 }
                 echo json_encode([
                     'status' => 200,
-                    'message' => 'User has been created'
+                    'message' => 'Tạo thành công user'
                 ]);
             } catch (Exception $e) {
                 echo json_encode([
                     'status' => 500,
-                    'message' => $e
+                    'message' => "Tạo thất bại"
                 ]);
             }
 
@@ -116,25 +130,42 @@ class AdminUser extends Controller
 
     function DeleteUser()
     {
+        if(!$this->CheckPermission("deleteUser")){
+            echo json_encode([
+                'status' => 500,
+                'message' => 'Bạn không có quyền'
+            ]);
+            die();
+        }
+
         $check = $this->modelUser->DeleteUser($_GET['id']);
         if ($check) {
             echo json_encode([
                 'status' => 200,
-                'message' => 'User has been deleted'
+                'message' => 'Xóa thành công'
             ]);
         } else {
             echo json_encode([
                 'status' => 500,
-                'message' => ''
+                'message' => 'Xóa thất bại'
             ]);
         }
     }
+    function SavePermission()
+    {
 
+        $userId = intval($_POST["userId"]);
+        $permission = $_POST["permission"];
+        var_dump($permission);
+        $this->modelUser->updatePermission($userId, $permission);
+
+    }
     function ViewUser()
     {
         $id = $_GET['id'];
         $data = $this->modelUser->GetUserById($id);
-        return $this->Views("Share/AdminLayout", ['subview' => 'AdminUser/detail', 'user'=>$data]);
+        $role_name = $this->modelRole->GetRoleId($data->roleId);
+        return $this->Views("Share/AdminLayout", ['subview' => 'AdminUser/detail', 'user'=>$data, 'role'=>$role_name] );
     }
 
 }

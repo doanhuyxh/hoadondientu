@@ -120,7 +120,7 @@
                  data-bs-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="/admin-customer">Khách hàng</a>
-                    <a class="collapse-item" href="utilities-border.html">Nhà cung cấp</a>
+                    <a class="collapse-item" href="/admin-supplier">Nhà cung cấp</a>
                     <a class="collapse-item" href="/admin-goods">Hàng hóa</a>
                     <a class="collapse-item" href="/admin-exchange-rate">Tỷ giá</a>
                 </div>

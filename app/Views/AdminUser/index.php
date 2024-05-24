@@ -56,8 +56,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Lưu</button>
-                <button type="button" class="btn btn-primary" onclick="Save()">Đóng</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="Save()">Lưu</button>
             </div>
         </div>
     </div>
@@ -101,8 +101,9 @@
                     Swal.fire({
                         position: "top-end",
                         icon: "error",
+                        title:res.message,
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 3000
                     });
                 }
             })
@@ -159,8 +160,9 @@
                     Swal.fire({
                         position: "top-end",
                         icon: "error",
+                        title:res.message,
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 3000
                     });
                 }
             })
