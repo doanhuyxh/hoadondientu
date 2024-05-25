@@ -154,8 +154,8 @@
             <div id="collapseUtilities3" class="collapse" aria-labelledby="headingUtilities"
                  data-bs-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="/admin-bill">Lập tờ khai</a>
-                    <a class="collapse-item" href="/admin-create-bill">Tra cứu tờ khai</a>
+                    <a class="collapse-item" href="/admin-declaration-create">Lập tờ khai</a>
+                    <a class="collapse-item" href="/admin-declaration">Tra cứu tờ khai</a>
                 </div>
             </div>
         </li>

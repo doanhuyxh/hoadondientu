@@ -64,7 +64,14 @@ $routes['admin-get-number-id'] = "AdminNumber/getNumberById";
 $routes['admin-save-number'] = "AdminNumber/SaveNumber";
 $routes['admin-delete-number'] = "AdminNumber/DeleteNumber";
 
-
+//admin tờ khai
+$routes['admin-declaration'] = "AdminDeclaration/index";
+$routes['admin-declaration-create'] = "AdminDeclaration/create";
+$routes['admin-get-declaration'] = "AdminDeclaration/getDeclaration";
+$routes['admin-get-declaration-id'] = "AdminDeclaration/getDeclarationById";
+$routes['admin-save-declaration'] = "AdminDeclaration/SaveDeclaration";
+$routes['admin-delete-declaration'] = "AdminDeclaration/DeleteDeclaration";
+$routes['view-declaration'] = "AdminDeclaration/ViewDeclaration";
 
 //admin cấu hình
 $routes['admin-mail'] = "AdminSetting/mail";

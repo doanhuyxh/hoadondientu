@@ -145,6 +145,22 @@
                             <label for="deleteNumber" class="form-check-label">xóa</label>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <h5>Tờ khai</h5>
+                        <div class="form-check">
+                            <input id="listDeclaration" value="listDeclaration" class="form-check-input" type="checkbox">
+                            <label for="listDeclaration" class="form-check-label">Xem danh sách</label>
+                        </div>
+                        <div class="form-check">
+                            <input id="addEditDeclaration" value="addEditDeclaration" class="form-check-input"
+                                   type="checkbox">
+                            <label for="addEditDeclaration" class="form-check-label">tạo, cập nhật</label>
+                        </div>
+                        <div class="form-check">
+                            <input id="deleteDeclaration" value="deleteDeclaration" class="form-check-input" type="checkbox">
+                            <label for="deleteDeclaration" class="form-check-label">xóa</label>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <h5>Hóa đơn</h5>

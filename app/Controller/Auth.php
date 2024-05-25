@@ -27,13 +27,16 @@ class Auth extends Controller
                     $role_name = $this->modelRole->GetRoleId($data->roleId);
                     $_SESSION["role_name"] = $role_name->name;
 
-                    if($role_name->name === "admin" || $role_name->name == "manager"){
-                        header('Location: ' . _WEB_ROOT . '/admin');
-                        die();
-                    }else{
-                    header('Location: ' . _WEB_ROOT . '/trang-chu');
-                        die();
-                    }
+                    header('Location: ' . _WEB_ROOT . '/admin');
+                    die();
+
+//                    if($role_name->name === "admin" || $role_name->name == "manager"){
+//                        header('Location: ' . _WEB_ROOT . '/admin');
+//                        die();
+//                    }else{
+//                    header('Location: ' . _WEB_ROOT . '/trang-chu');
+//                        die();
+//                    }
                 } else {
                     session_destroy();                    
                     return $this->Views("Share/Layout", ['subview' => 'Home/index', 'error'=> true, 'user'=> $username, 'pass'=> $password]);
