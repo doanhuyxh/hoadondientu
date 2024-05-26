@@ -4,7 +4,7 @@ class BillModel extends Model
 {
     public function createBill($InvoiceNumber, $InvoiceDate, $SellerName, $SellerAddress, $SellerPhone, $SellerTaxCode, $BuyerName, $BuyerAddress, $BuyerPhone, $BuyerTaxCode, $SubTotal, $TaxRate, $TaxAmount, $TotalAmount, $PaymentMethod, $BankAccount, $BankName, $IssuerName, $Signature, $CompanySeal, $Status, $userId)
     {
-        $stmt = $this->connection->prepare('INSERT INTO web_bill (InvoiceNumber, InvoiceDate, SellerName, SellerAddress, SellerPhone, SellerTaxCode, BuyerName, BuyerAddress, BuyerPhone, BuyerTaxCode, SubTotal, TaxRate, TaxAmount, TotalAmount, PaymentMethod, BankAccount, BankName, IssuerName, Signature, CompanySeal, Status, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)');
+        $stmt = $this->connection->prepare('INSERT INTO web_bill (InvoiceNumber, InvoiceDate, SellerName, SellerAddress, SellerPhone, SellerTaxCode, BuyerName, BuyerAddress, BuyerPhone, BuyerTaxCode, SubTotal, TaxRate, TaxAmount, TotalAmount, PaymentMethod, BankAccount, BankName, IssuerName, Signature, CompanySeal, Status, userId, create_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())');
 
         $stmt->bindParam(1, $InvoiceNumber);
         $stmt->bindParam(2, $InvoiceDate);
@@ -33,7 +33,6 @@ class BillModel extends Model
         $billId = $this->connection->lastInsertId();
         return $billId;
     }
-
 
 
     public function updateBill($id, $InvoiceNumber, $InvoiceDate, $SellerName, $SellerAddress, $SellerPhone, $SellerTaxCode, $BuyerName, $BuyerAddress, $BuyerPhone, $BuyerTaxCode, $SubTotal, $TaxRate, $TaxAmount, $TotalAmount, $PaymentMethod, $BankAccount, $BankName, $IssuerName, $Signature, $CompanySeal, $Status)
@@ -65,13 +64,26 @@ class BillModel extends Model
         $stmt->execute();
     }
 
-    function deleteBill($id){
+    function ChangeStatus($id, $status)
+    {
+        $stmt = $this->connection->prepare('UPDATE web_bill SET Status = :Status WHERE id = :id');
+        $stmt->bindParam(':Status', $status);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+    }
+
+
+    function deleteBill($id)
+    {
         $stmt = $this->connection->prepare('DELETE FROM web_bill WHERE id = :id');
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->rowCount() > 0;
     }
-    function getBillById($id){
+
+    function getBillById($id)
+    {
         $stmt = $this->connection->prepare('SELECT * FROM web_bill WHERE id = :id');
         $stmt->bindParam(':id', $id);
         $stmt->execute();
@@ -86,7 +98,7 @@ class BillModel extends Model
         $params = [];
 
         if (!empty($searchValue)) {
-            $searchFields = ['InvoiceNumber', 'InvoiceDate', 'SellerName', 'SellerAddress', 'SellerPhone','SellerTaxCode', 'BuyerName', 'BuyerAddress', 'BuyerPhone', 'BuyerTaxCode', 'SubTotal', 'TaxRate', 'TaxAmount', 'TotalAmount', 'PaymentMethod', 'BankAccount', 'BankName','Status'];
+            $searchFields = ['InvoiceNumber', 'InvoiceDate', 'SellerName', 'SellerAddress', 'SellerPhone', 'SellerTaxCode', 'BuyerName', 'BuyerAddress', 'BuyerPhone', 'BuyerTaxCode', 'SubTotal', 'TaxRate', 'TaxAmount', 'TotalAmount', 'PaymentMethod', 'BankAccount', 'BankName', 'Status'];
             foreach ($searchFields as $field) {
                 $conditions[] = "$field LIKE :searchValue";
             }
@@ -113,7 +125,5 @@ class BillModel extends Model
         $results = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $results;
     }
-
-
 
 }

@@ -1,4 +1,4 @@
-<h2>Quản lý hóa đơn</h2>
+<h2>Phê duyệt hóa đơn</h2>
 
 <div class="container-fluid mt-5">
 
@@ -24,8 +24,8 @@
 
 <script>
 
-    function Delete(id) {
-        fetch("/admin-delete-bill?id=" + id)
+    function Accept(id) {
+        fetch(`/admin-bill-approve-status?id=${id}&status=accept`)
             .then(es => es.json())
             .then(res => {
                 console.log(res)
@@ -33,7 +33,7 @@
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: "Xóa thành công",
+                        title: "Thành công",
                         showConfirmButton: false,
                         timer: 1500
                     }).then(r => {
@@ -50,6 +50,34 @@
                 }
             })
     }
+
+    function Refuse(id) {
+        fetch(`/admin-bill-approve-status?id=${id}&status=refuse`)
+            .then(es => es.json())
+            .then(res => {
+                console.log(res)
+                if (res.status == 200) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Thành công",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(r => {
+                        $("#table_bill").DataTable().ajax.reload()
+                    });
+                } else {
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "Thất bại",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+    }
+
 
     function View(id) {
         window.location.href="/view-bill?id="+id
@@ -76,21 +104,24 @@
 
             ajax: {
                 url: '/admin-get-bill',
+                data: function (d) {
+                    d.status = 'pending';
+                },
                 "datatype": "json"
             },
             columns: [
                 {"data": "InvoiceDate", "name": "InvoiceDate"},
                 {"data": "InvoiceNumber", "name": "InvoiceNumber"},
+
+
                 {"data": "IssuerName", "name": "IssuerName"},
                 {
                     "data": "Status", "name": "Status",
                     "render": function (data, type, row) {
-                        if(data =='pending'){
+                        if(data =='Pending'){
                             return "Đang chờ"
-                        }else if(data == 'accept') {
-                            return `<span class="btn bg-success text-white">Thành công</span>`
-                        }else{
-                            return `<span class="btn bg-danger text-white">Từ chối</span>`
+                        }else {
+                            return "Đã phê duyệt"
                         }
                     }
                 },
@@ -99,8 +130,12 @@
 
                         return "<a href='javascript:void(0)' class='btn btn-primary mx-1' onclick=View('" + row.id + "');>" +
                             '<i class="fa-solid fa-eye"></i>' +
-                            "</a>" + "<a href='javascript:void(0)' class='btn btn-danger mx-1' onclick=Delete('" + row.id + "');>" +
-                            '<i class="fa-solid fa-trash"></i>' +
+                            "</a>" +
+                            "<a href='javascript:void(0)' class='btn btn-success mx-1' onclick=Accept('" + row.id + "');>" +
+                            '<i class="fa-solid fa-check"></i>' +
+                            "</a>" +
+                            "<a href='javascript:void(0)' class='btn btn-warning mx-1' onclick=Refuse('" + row.id + "');>" +
+                            '<i class="fa-solid fa-xmark"></i>' +
                             "</a>";
                     }
 

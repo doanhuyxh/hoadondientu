@@ -1,4 +1,4 @@
-<h2>Quản lý hóa đơn</h2>
+<h2>Quản lý tờ khai</h2>
 
 <div class="container-fluid mt-5">
 

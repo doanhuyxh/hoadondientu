@@ -56,6 +56,8 @@ $routes['admin-get-bill-id'] = "AdminBill/getBillById";
 $routes['admin-save-bill'] = "AdminBill/SaveBill";
 $routes['admin-delete-bill'] = "AdminBill/DeleteBill";
 $routes['view-bill'] = "AdminBill/ViewBill";
+$routes['admin-bill-approve'] = "AdminBill/Approve";
+$routes['admin-bill-approve-status'] = "AdminBill/ChangeStatus";
 
 //admin cấp số
 $routes['admin-number'] = 'AdminNumber/index';
@@ -63,6 +65,7 @@ $routes['admin-get-number'] = "AdminNumber/getNumber";
 $routes['admin-get-number-id'] = "AdminNumber/getNumberById";
 $routes['admin-save-number'] = "AdminNumber/SaveNumber";
 $routes['admin-delete-number'] = "AdminNumber/DeleteNumber";
+$routes['admin-get-number-item'] = "AdminNumber/getNumberItem";
 
 //admin tờ khai
 $routes['admin-declaration'] = "AdminDeclaration/index";

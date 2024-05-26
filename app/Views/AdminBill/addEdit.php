@@ -5,7 +5,9 @@
 
         <div class="mb-3">
             <label class="form-label">Số hóa đơn</label>
-            <input class="form-control" id="InvoiceNumber" name="InvoiceNumber" type="number">
+            <select class="form-control" id="InvoiceNumber" name="InvoiceNumber">
+                <option disabled selected value="">--vui lòng chọn--</option>
+            </select>
         </div>
 
         <div class="mb-3">
@@ -186,6 +188,18 @@
                     $("#TotalAmount").val(value)
                 }
             }
+        },
+        mounted(){
+            fetch("/admin-get-number-item")
+                .then(res=>res.json())
+                .then(number=>{
+                    number.forEach(function(n) {
+                        $('#InvoiceNumber').append($('<option>', {
+                            value: n.name,
+                            text: n.name
+                        }));
+                    });
+                })
         },
         methods: {
             AddItem() {

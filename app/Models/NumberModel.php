@@ -16,6 +16,14 @@ class NumberModel extends Model
         return $stmt->fetch(PDO::FETCH_OBJ);
 
     }
+    public function getNumberItem()
+    {
+        $stmt = $this->connection->prepare('SELECT id, name FROM web_number');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+
+    }
+
 
     public function GetNumber($pageSize, $start, $searchValue, $sortColumn, $sortColumnAscDesc): array
     {

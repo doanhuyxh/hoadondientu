@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="9993f056-1bd9-4019-b46b-d77b378b8493" name="103.245.236.208">
+        <fileTransfer rootFolder="/var/www/hoadondientu" accessType="SFTP" host="103.245.236.208" port="22" sshConfigId="b369e404-f46d-4631-bec4-2132c19a4c7f" sshConfig="root@103.245.236.208:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -103,7 +103,6 @@
                  data-bs-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="/admin-user">Quản lý user</a>
-                    <a class="collapse-item" href="">Mẫu hoá đơn</a>
                     <a class="collapse-item" href="/admin-mail">Mẫu email</a>
                     <a class="collapse-item" href="/admin-setting">Cấu hình hệ thống</a>
                 </div>
@@ -139,8 +138,7 @@
                     <a class="collapse-item" href="/admin-bill">Hóa đơn</a>
                     <a class="collapse-item" href="/admin-create-bill">Lập hóa đơn</a>
                     <a class="collapse-item" href="/admin-number">Cấp số</a>
-                    <a class="collapse-item" href="">Duyệt hoá đơn</a>
-                    <a class="collapse-item" href="">Thông báo sai sót</a>
+                    <a class="collapse-item" href="/admin-bill-approve">Duyệt hoá đơn</a>
                 </div>
             </div>
         </li>

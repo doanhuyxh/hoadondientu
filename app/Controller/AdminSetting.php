@@ -72,22 +72,75 @@ class AdminSetting extends Controller
     function setting()
     {
 
-        $title =$this->modelConfig->GetKey('title');
-        $css =$this->modelConfig->GetKey('css');
-        $script =$this->modelConfig->GetKey('script');
-        return $this->Views("Share/AdminLayout", ['subview' => 'AdminSetting/setting', 'title' => $title, 'css' => $css, 'script' => $script]);
+        if (!$this->CheckPermission("listSetting")) {
+            header('Location: ' . _WEB_ROOT . '/admin');
+            die();
+        }
+
+        $keys = [
+            'origin', 'mst', 'under', 'mail', 'city', 'address',
+            'account', 'cqt_cap_tren', 'mst_cap_hd', 'phone',
+            'district', 'wards', 'bank_name', 'cqt'
+        ];
+
+        $settings = [];
+        foreach ($keys as $key) {
+            $settings[$key] = $this->modelConfig->GetKey($key);
+        }
+
+        return $this->Views("Share/AdminLayout", ['subview' => 'AdminSetting/setting',
+            'origin' => $settings['origin'],
+            'mst' => $settings['mst'],
+            'under' => $settings['under'],
+            'mail' => $settings['mail'],
+            'city' => $settings['city'],
+            'address' => $settings['address'],
+            'account' => $settings['account'],
+            'cqt_cap_tren' => $settings['cqt_cap_tren'],
+            'mst_cap_hd' => $settings['mst_cap_hd'],
+            'phone' => $settings['phone'],
+            'district' => $settings['district'],
+            'wards' => $settings['wards'],
+            'bank_name' => $settings['bank_name'],
+            'cqt' => $settings['cqt']
+        ]);
 
 
     }
 
     function SaveKey()
     {
-        $title = $_POST['title'];
-        $css = $_POST['css'];
-        $script = $_POST['script'];
+        if (!$this->CheckPermission("addEditSetting")) {
+            echo json_encode([
+                'status' => 500,
+                'message' => 'Bạn không có quyền'
+            ]);
+            die();
+        }
+        try {
+            $keys = [
+                'origin', 'mst', 'under', 'mail', 'city', 'address',
+                'account', 'cqt_cap_tren', 'mst_cap_hd', 'phone',
+                'district', 'wards', 'bank_name', 'cqt'
+            ];
 
-        $this->modelConfig->UpdateKey("title", $title);
-        $this->modelConfig->UpdateKey("css", $css);
-        $this->modelConfig->UpdateKey("script", $script);
+            foreach ($keys as $key) {
+                if (isset($_POST[$key])) {
+                    $this->modelConfig->UpdateKey($key, $_POST[$key]);
+                }
+            }
+
+            echo json_encode([
+                'status' => 200,
+                'message' => 'Cập nhât thành công'
+            ]);
+
+        } catch (Exception $exception) {
+            echo json_encode([
+                'status' => 500,
+                'message' => 'Cập nhật không thành công'
+            ]);
+        }
+
     }
 }

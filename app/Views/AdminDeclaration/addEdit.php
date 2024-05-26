@@ -1,4 +1,4 @@
-<h2>Thông tin tờ khai mới</h2>
+<h2>Thông tin tờ khai thuế mới</h2>
 
 <div class="container d-flex justify-content-center mt-5" id="appVue">
     <div class="form-group w-75 shadow-lg p-3 mb-5 bg-body rounded">

@@ -13,7 +13,7 @@ class AdminBill extends Controller
 
     function index()
     {
-        if(!$this->CheckPermission("listBill")){
+        if (!$this->CheckPermission("listBill")) {
             header('Location: ' . _WEB_ROOT . '/admin');
             die();
         }
@@ -25,6 +25,9 @@ class AdminBill extends Controller
     function getBill()
     {
         try {
+
+            $status = $_GET['status'];
+
             $draw = isset($_REQUEST['draw']) ? $_REQUEST['draw'] : null;
             $start = isset($_REQUEST['start']) ? $_REQUEST['start'] : null;
             $length = isset($_REQUEST['length']) ? $_REQUEST['length'] : null;
@@ -41,12 +44,28 @@ class AdminBill extends Controller
 
             $gridItems = $this->billModel->getAllBill($pageSize, $skip, $searchValue, $sortColumn, $sortColumnAscDesc);
 
-            echo json_encode([
-                'draw' => $draw,
-                'recordsFiltered' => count($gridItems),
-                'recordsTotal' => count($gridItems),
-                'data' => $gridItems
-            ]);
+            if($status){
+                $filteredGridItems = [];
+                foreach ($gridItems as $item) {
+                    if ($item->Status === 'pending') {
+                        $filteredGridItems[] = $item;
+                    }
+                }
+                echo json_encode([
+                    'draw' => $draw,
+                    'recordsFiltered' => count($filteredGridItems),
+                    'recordsTotal' => count($filteredGridItems),
+                    'data' => $filteredGridItems
+                ]);
+            }else{
+                echo json_encode([
+                    'draw' => $draw,
+                    'recordsFiltered' => count($gridItems),
+                    'recordsTotal' => count($gridItems),
+                    'data' => $gridItems
+                ]);
+            }
+
         } catch (Exception $exception) {
             echo json_encode([
                 'draw' => "null",
@@ -57,20 +76,6 @@ class AdminBill extends Controller
         }
     }
 
-    function createBill()
-    {
-        if(!$this->CheckPermission("addEditBill")){
-            header('Location: ' . _WEB_ROOT . '/admin');
-            die();
-        }
-        return $this->Views("Share/AdminLayout", ['subview' => 'AdminBill/addEdit']);
-    }
-
-    function getBillById()
-    {
-
-    }
-
     function SaveBill()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -78,7 +83,7 @@ class AdminBill extends Controller
             die();
         }
 
-        if(!$this->CheckPermission("addEditBill")){
+        if (!$this->CheckPermission("addEditBill")) {
             echo json_encode([
                 'status' => 500,
                 'message' => 'Bạn không có quyền'
@@ -109,7 +114,7 @@ class AdminBill extends Controller
             $IssuerName = $_POST['IssuerName'];
             $Signature = "";
             $CompanySeal = "";
-            $Status = "Đang chờ";
+            $Status = "Pending";
             $ItemInBill = json_decode($_POST['ItemInBill'], true);
 
             $billId = $this->billModel->createBill($InvoiceNumber, $InvoiceDate, $SellerName, $SellerAddress, $SellerPhone, $SellerTaxCode, $BuyerName, $BuyerAddress, $BuyerPhone, $BuyerTaxCode, $SubTotal, $TaxRate, $TaxAmount, $TotalAmount, $PaymentMethod, $BankAccount, $BankName, $IssuerName, $Signature, $CompanySeal, $Status, 0);
@@ -134,10 +139,19 @@ class AdminBill extends Controller
         die();
     }
 
+    function createBill()
+    {
+        if (!$this->CheckPermission("addEditBill")) {
+            header('Location: ' . _WEB_ROOT . '/admin');
+            die();
+        }
+        return $this->Views("Share/AdminLayout", ['subview' => 'AdminBill/addEdit']);
+    }
+
     function DeleteBill()
     {
 
-        if(!$this->CheckPermission("deleteBill")){
+        if (!$this->CheckPermission("deleteBill")) {
             echo json_encode([
                 'status' => 500,
                 'message' => 'Bạn không có quyền'
@@ -168,8 +182,29 @@ class AdminBill extends Controller
         $bill = $this->billModel->getBillById($id);
         $listItem = $this->bilItemModel->getItemInBillId($id);
 
-        return $this->Views("Share/AdminLayout", ['subview' => 'AdminBill/detail', 'bill'=>$bill, 'listItem'=>$listItem]);
+        return $this->Views("Share/AdminLayout", ['subview' => 'AdminBill/detail', 'bill' => $bill, 'listItem' => $listItem]);
     }
 
+    function getBillById()
+    {
+
+    }
+
+    function Approve()
+    {
+        if (!$this->CheckPermission("ApproveBill")) {
+            header('Location: ' . _WEB_ROOT . '/admin');
+            die();
+        }
+
+        return $this->Views("Share/AdminLayout", ['subview' => 'AdminBill/approve']);
+    }
+
+    function ChangeStatus()
+    {
+        $id = $_GET['id'];
+        $status = $_GET['status'];
+        $this->billModel->ChangeStatus($id, $status);
+    }
 
 }

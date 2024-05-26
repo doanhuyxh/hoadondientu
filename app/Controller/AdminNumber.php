@@ -60,6 +60,12 @@ class AdminNumber extends Controller
         echo json_encode($number);
     }
 
+    function getNumberItem()
+    {
+        $number = $this->modelNumber->getNumberItem();
+        echo json_encode($number);
+    }
+
     function SaveNumber()
     {
         if(!$this->CheckPermission("addEditNumber")){
