@@ -65,6 +65,7 @@
                     <td>STT</td>
                     <td class="text-nowrap">Sản phẩm</td>
                     <td class="text-nowrap">Số lượng</td>
+                    <td class="text-nowrap">Đơn vị</td>
                     <td class="text-nowrap">Đơn giá</td>
                     <td class="text-nowrap">Tổng cộng</td>
                     <td></td>
@@ -79,6 +80,9 @@
                     <td>
                         <input class="form-control" v-model="item.Quantity" type="number"
                                v-on:input="calculateTotalPrice(index)">
+                    </td>
+                    <td>
+                        <input class="form-control" v-model="item.unit" type="text">
                     </td>
                     <td>
                         <input class="form-control" v-model="item.UnitPrice" type="number"
@@ -96,7 +100,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="6"></td>
                     <td>
                         <span class="btn btn-success" v-on:click="AddItem">
                             <i class="fa-solid fa-plus"></i>

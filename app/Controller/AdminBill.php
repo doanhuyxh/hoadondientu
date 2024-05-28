@@ -4,11 +4,13 @@ class AdminBill extends Controller
 {
     protected $billModel;
     protected $bilItemModel;
+    protected  $modelConfig;
 
     public function __construct()
     {
         $this->billModel = $this->model("BillModel");
         $this->bilItemModel = $this->model("ItemInBillModel");
+        $this->modelConfig = $this->model("WebConfigModel");
     }
 
     function index()
@@ -120,7 +122,7 @@ class AdminBill extends Controller
             $billId = $this->billModel->createBill($InvoiceNumber, $InvoiceDate, $SellerName, $SellerAddress, $SellerPhone, $SellerTaxCode, $BuyerName, $BuyerAddress, $BuyerPhone, $BuyerTaxCode, $SubTotal, $TaxRate, $TaxAmount, $TotalAmount, $PaymentMethod, $BankAccount, $BankName, $IssuerName, $Signature, $CompanySeal, $Status, 0);
 
             foreach ($ItemInBill as $item) {
-                $this->bilItemModel->createItemInBill($billId, $item['ItemDescription'], $item['Quantity'], $item['UnitPrice']);
+                $this->bilItemModel->createItemInBill($billId, $item['ItemDescription'], $item['Quantity'], $item['UnitPrice'], $item['unit']);
             }
 
             echo json_encode([
@@ -177,12 +179,21 @@ class AdminBill extends Controller
 
     function ViewBill()
     {
+        $keys = [
+            'origin', 'mst', 'under', 'mail', 'city', 'address',
+            'account', 'cqt_cap_tren', 'mst_cap_hd', 'phone',
+            'district', 'wards', 'bank_name', 'cqt'
+        ];
 
+        $settings = [];
+        foreach ($keys as $key) {
+            $settings[$key] = $this->modelConfig->GetKey($key);
+        }
         $id = $_GET['id'];
         $bill = $this->billModel->getBillById($id);
         $listItem = $this->bilItemModel->getItemInBillId($id);
 
-        return $this->Views("Share/AdminLayout", ['subview' => 'AdminBill/detail', 'bill' => $bill, 'listItem' => $listItem]);
+        return $this->Views("Share/AdminLayout", ['subview' => 'AdminBill/detail', 'bill' => $bill, 'listItem' => $listItem, 'settings'=>$settings]);
     }
 
     function getBillById()
